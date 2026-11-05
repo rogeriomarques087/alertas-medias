@@ -1,0 +1,51 @@
+[
+  {
+    "ticker": "VALE3",
+    "acao": "venda",
+    "etapa": "previa",
+    "titulo": "VALE3 — possível VENDA (prévia)",
+    "corpo": "Perdeu a média de 9 no pregão. Preço R$ 74,38. Confirma após o fechamento. (MM9 R$ 74,50)",
+    "medias": [
+      9
+    ],
+    "preco": 74.3784,
+    "enviada_em": "2026-11-05T13:05-03:00"
+  },
+  {
+    "ticker": "WEGE3",
+    "acao": "compra",
+    "etapa": "previa",
+    "titulo": "WEGE3 — possível COMPRA (prévia)",
+    "corpo": "Rompeu para cima a média de 9 no pregão. Preço R$ 41,69. Confirma após o fechamento. (MM9 R$ 41,27)",
+    "medias": [
+      9
+    ],
+    "preco": 41.689,
+    "enviada_em": "2026-11-05T13:05-03:00"
+  },
+  {
+    "ticker": "resumo-13h",
+    "acao": "compra",
+    "etapa": "resumo",
+    "titulo": "Resumo 13h: 2 possíveis compras",
+    "corpo": "Rompeu para cima: BBAS3 (MM9/21) R$ 23,83; RENT3 (MM9) R$ 33,28.",
+    "itens": [
+      {
+        "ticker": "BBAS3",
+        "medias": [
+          9,
+          21
+        ],
+        "preco": 23.8257
+      },
+      {
+        "ticker": "RENT3",
+        "medias": [
+          9
+        ],
+        "preco": 33.2837
+      }
+    ],
+    "enviada_em": "2026-11-05T13:05-03:00"
+  }
+]

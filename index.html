@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alertas de Médias</title>
+  <meta name="theme-color" content="#E9EDF1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111821" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Médias">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="barra-linha">
+      <div>
+        <h1>Médias</h1>
+        <p id="atualizado" class="atualizado"></p>
+      </div>
+      <button type="button" id="recarregar" class="botao secundario pequeno">Atualizar</button>
+    </div>
+    <nav class="abas" role="tablist" aria-label="Seções">
+      <button type="button" role="tab" id="tab-carteira" aria-controls="carteira" data-aba="carteira">Carteira</button>
+      <button type="button" role="tab" id="tab-alertas" aria-controls="alertas" data-aba="alertas">Alertas</button>
+      <button type="button" role="tab" id="tab-ajustes" aria-controls="ajustes" data-aba="ajustes">Ajustes</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="carteira" role="tabpanel" aria-labelledby="tab-carteira" hidden>
+      <ul id="lista-carteira" class="lista"></ul>
+      <button type="button" id="nova-compra" class="botao largo">Registrar compra</button>
+    </section>
+
+    <section id="alertas" role="tabpanel" aria-labelledby="tab-alertas" hidden>
+      <div id="lista-alertas"></div>
+    </section>
+
+    <section id="ajustes" role="tabpanel" aria-labelledby="tab-ajustes" hidden>
+      <h2>Conexão com o GitHub</h2>
+      <p class="ajuda">O app lê a carteira e os alertas do repositório onde o monitor roda, e grava lá suas compras e vendas.</p>
+      <form id="form-conexao" class="formulario">
+        <label for="repo">Repositório</label>
+        <input id="repo" name="repo" autocomplete="off" autocapitalize="off" spellcheck="false"
+               placeholder="rogeriomarques087/monitor-acoes" required pattern="[\w.-]+/[\w.-]+">
+        <label for="token">Token de acesso</label>
+        <input id="token" name="token" type="password" autocomplete="off" autocapitalize="off" spellcheck="false"
+               placeholder="github_pat_…" required>
+        <details class="dica">
+          <summary>Como criar o token</summary>
+          <p>No GitHub: Settings › Developer settings › Fine-grained tokens › Generate new token.
+            Em Repository access, escolha só o repositório do monitor. Em Permissions › Contents, marque Read and write.
+            O token fica guardado só neste aparelho.</p>
+        </details>
+        <div class="linha">
+          <button type="submit" class="botao">Salvar conexão</button>
+          <button type="button" id="desconectar" class="botao secundario" hidden>Desconectar</button>
+        </div>
+        <p id="estado-conexao" class="estado" role="status"></p>
+      </form>
+
+      <h2>Tipo de média</h2>
+      <p class="ajuda">Use o mesmo do seu gráfico. MME/EMA é exponencial, MMS/SMA é simples.</p>
+      <fieldset id="tipo-media" class="opcoes">
+        <legend class="visualmente-oculto">Tipo de média</legend>
+        <label><input type="radio" name="tipo" value="exponencial"> Exponencial</label>
+        <label><input type="radio" name="tipo" value="simples"> Simples</label>
+      </fieldset>
+
+      <h2>Receber avisos neste iPhone</h2>
+      <ol class="passos">
+        <li id="p1" class="passo">
+          <div class="marca" aria-hidden="true">1</div>
+          <div class="conteudo">
+            <h3>Adicionar à Tela de Início</h3>
+            <p class="estado" data-estado></p>
+            <p class="ajuda">No Safari, toque em Compartilhar e depois em “Adicionar à Tela de Início”. Abra o app pelo ícone que aparecer.</p>
+          </div>
+        </li>
+        <li id="p2" class="passo">
+          <div class="marca" aria-hidden="true">2</div>
+          <div class="conteudo">
+            <h3>Ativar notificações</h3>
+            <p class="estado" data-estado></p>
+            <button type="button" id="ativar" class="botao">Ativar notificações</button>
+          </div>
+        </li>
+        <li id="p3" class="passo">
+          <div class="marca" aria-hidden="true">3</div>
+          <div class="conteudo">
+            <h3>Ligar ao monitor</h3>
+            <p class="ajuda">Copie o código e cole no segredo <code>PUSH_SUBSCRIPTION</code> do GitHub. Só precisa fazer uma vez.</p>
+            <textarea id="codigo" readonly rows="4" aria-label="Código de inscrição" placeholder="O código aparece depois do passo 2"></textarea>
+            <div class="linha">
+              <button type="button" id="copiar" class="botao secundario" disabled>Copiar código</button>
+              <button type="button" id="testar" class="botao secundario" disabled>Notificação de teste</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <p class="rodape">O app só avisa. Comprar ou vender é sempre decisão sua.</p>
+    </section>
+  </main>
+
+  <dialog id="dlg-compra" aria-labelledby="dlg-compra-titulo">
+    <form method="dialog" id="form-compra" class="formulario">
+      <h2 id="dlg-compra-titulo">Registrar compra</h2>
+      <label for="c-ticker">Ação</label>
+      <input id="c-ticker" name="ticker" required autocomplete="off" autocapitalize="characters"
+             pattern="[A-Za-z]{4}[0-9]{1,2}" placeholder="PETR4">
+      <fieldset class="opcoes">
+        <legend>Vender quando fechar abaixo da média de</legend>
+        <label class="mm-op m9"><input type="radio" name="media" value="9" required> 9</label>
+        <label class="mm-op m21"><input type="radio" name="media" value="21"> 21</label>
+        <label class="mm-op m50"><input type="radio" name="media" value="50"> 50</label>
+      </fieldset>
+      <label for="c-preco">Preço pago</label>
+      <input id="c-preco" name="preco" required inputmode="decimal" autocomplete="off" placeholder="38,40"
+             pattern="\s*\d+([.,]\d{1,4})?\s*">
+      <p id="c-erro" class="estado erro" role="alert"></p>
+      <div class="linha">
+        <button type="submit" value="salvar" class="botao">Salvar compra</button>
+        <button type="button" class="botao secundario" data-fechar>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-venda" aria-labelledby="dlg-venda-titulo">
+    <form method="dialog" id="form-venda" class="formulario">
+      <h2 id="dlg-venda-titulo">Registrar venda</h2>
+      <p id="v-texto"></p>
+      <div class="linha">
+        <button type="submit" value="salvar" class="botao vender">Registrar venda</button>
+        <button type="button" class="botao secundario" data-fechar>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-grafico" class="dlg-grafico" aria-labelledby="g-titulo">
+    <div class="ativo-topo">
+      <h2 id="g-titulo"></h2>
+      <p id="g-preco" class="preco"></p>
+    </div>
+    <div id="g-corpo"></div>
+    <p id="g-texto" class="saida"></p>
+    <div class="linha">
+      <span id="g-acoes"></span>
+      <button type="button" class="botao secundario pequeno" data-fechar>Fechar</button>
+    </div>
+  </dialog>
+
+  <p id="aviso" class="aviso" role="status" aria-live="polite"></p>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
