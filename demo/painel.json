@@ -10,6 +10,8 @@
     21,
     50
   ],
+  "filtro_volume": 1.2,
+  "stop_percentual": 5.0,
   "falhas": [],
   "ativos": {
     "PETR4": {
@@ -530,6 +532,7 @@
         }
       },
       "origem": "pregão",
+      "volume_rel": 4.84,
       "atualizado_em": "2026-11-05T13:05-03:00"
     },
     "VALE3": {
@@ -1050,6 +1053,7 @@
         }
       },
       "origem": "pregão",
+      "volume_rel": 5.79,
       "atualizado_em": "2026-11-05T13:05-03:00"
     },
     "WEGE3": {
@@ -1570,6 +1574,7 @@
         }
       },
       "origem": "pregão",
+      "volume_rel": 4.68,
       "atualizado_em": "2026-11-05T13:05-03:00"
     }
   },
@@ -2092,6 +2097,7 @@
         }
       },
       "origem": "pregão",
+      "volume_rel": 6.47,
       "atualizado_em": "2026-11-05T13:05-03:00"
     },
     "RENT3": {
@@ -2612,6 +2618,7 @@
         }
       },
       "origem": "pregão",
+      "volume_rel": 6.39,
       "atualizado_em": "2026-11-05T13:05-03:00"
     }
   }

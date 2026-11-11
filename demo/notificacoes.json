@@ -1,6 +1,17 @@
 [
   {
     "ticker": "VALE3",
+    "acao": "stop",
+    "etapa": "previa",
+    "titulo": "VALE3 — STOP atingido (prévia)",
+    "corpo": "Caiu 5,7% desde a compra (R$ 78,84). Preço R$ 74,38, abaixo do stop de 5% (R$ 74,90).",
+    "medias": [],
+    "preco": 74.3784,
+    "stop": 74.9,
+    "enviada_em": "2026-11-05T13:05-03:00"
+  },
+  {
+    "ticker": "VALE3",
     "acao": "venda",
     "etapa": "previa",
     "titulo": "VALE3 — possível VENDA (prévia)",
@@ -16,11 +27,12 @@
     "acao": "compra",
     "etapa": "previa",
     "titulo": "WEGE3 — possível COMPRA (prévia)",
-    "corpo": "Rompeu para cima a média de 9 no pregão. Preço R$ 41,69. Confirma após o fechamento. (MM9 R$ 41,27)",
+    "corpo": "Rompeu para cima a média de 9 no pregão. Preço R$ 41,69. Confirma após o fechamento. (MM9 R$ 41,27; volume 4,7×)",
     "medias": [
       9
     ],
     "preco": 41.689,
+    "vol": 4.68,
     "enviada_em": "2026-11-05T13:05-03:00"
   },
   {
@@ -28,7 +40,7 @@
     "acao": "compra",
     "etapa": "resumo",
     "titulo": "Resumo 13h: 2 possíveis compras",
-    "corpo": "Rompeu para cima: BBAS3 (MM9/21) R$ 23,83; RENT3 (MM9) R$ 33,28.",
+    "corpo": "Rompeu para cima: BBAS3 (MM9/21) R$ 23,83, vol 6,5×; RENT3 (MM9) R$ 33,28, vol 6,4×.",
     "itens": [
       {
         "ticker": "BBAS3",
@@ -36,14 +48,16 @@
           9,
           21
         ],
-        "preco": 23.8257
+        "preco": 23.8257,
+        "vol": 6.47
       },
       {
         "ticker": "RENT3",
         "medias": [
           9
         ],
-        "preco": 33.2837
+        "preco": 33.2837,
+        "vol": 6.39
       }
     ],
     "enviada_em": "2026-11-05T13:05-03:00"

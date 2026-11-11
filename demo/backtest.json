@@ -1,0 +1,527 @@
+{
+  "gerado_em": "2026-11-10T22:16-03:00",
+  "inicio": "2025-11-05",
+  "fim": "2026-11-05",
+  "meses": 12,
+  "tipo_media": "exponencial",
+  "volume_minimo": 1.2,
+  "stop": 5.0,
+  "acoes_analisadas": 25,
+  "acoes_sem_dados": [],
+  "variantes": {
+    "sem_filtro": "Regra pura",
+    "volume": "Com filtro de volume",
+    "stop": "Com stop de 5%",
+    "volume_stop": "Volume + stop de 5%"
+  },
+  "comprar_e_segurar_medio": 18.51,
+  "resultados": [
+    {
+      "media": 9,
+      "variante": "sem_filtro",
+      "operacoes": 489,
+      "abertas": 10,
+      "acerto": 34.4,
+      "medio": 0.22,
+      "mediana": -0.94,
+      "ganho_medio": 4.19,
+      "perda_media": -1.86,
+      "melhor": 34.24,
+      "pior": -5.57,
+      "dias": 5.0,
+      "stops": 0
+    },
+    {
+      "media": 9,
+      "variante": "volume",
+      "operacoes": 218,
+      "abertas": 3,
+      "acerto": 33.9,
+      "medio": 0.09,
+      "mediana": -0.99,
+      "ganho_medio": 4.2,
+      "perda_media": -2.03,
+      "melhor": 21.51,
+      "pior": -5.57,
+      "dias": 5.8,
+      "stops": 0
+    },
+    {
+      "media": 9,
+      "variante": "stop",
+      "operacoes": 490,
+      "abertas": 10,
+      "acerto": 34.3,
+      "medio": 0.21,
+      "mediana": -0.94,
+      "ganho_medio": 4.19,
+      "perda_media": -1.87,
+      "melhor": 34.24,
+      "pior": -5.0,
+      "dias": 5.0,
+      "stops": 10
+    },
+    {
+      "media": 9,
+      "variante": "volume_stop",
+      "operacoes": 220,
+      "abertas": 3,
+      "acerto": 33.6,
+      "medio": 0.05,
+      "mediana": -0.99,
+      "ganho_medio": 4.2,
+      "perda_media": -2.05,
+      "melhor": 21.51,
+      "pior": -5.0,
+      "dias": 5.8,
+      "stops": 8
+    },
+    {
+      "media": 21,
+      "variante": "sem_filtro",
+      "operacoes": 324,
+      "abertas": 9,
+      "acerto": 30.9,
+      "medio": 0.71,
+      "mediana": -1.02,
+      "ganho_medio": 6.37,
+      "perda_media": -1.81,
+      "melhor": 72.22,
+      "pior": -5.92,
+      "dias": 8.2,
+      "stops": 0
+    },
+    {
+      "media": 21,
+      "variante": "volume",
+      "operacoes": 150,
+      "abertas": 6,
+      "acerto": 27.3,
+      "medio": 0.48,
+      "mediana": -1.32,
+      "ganho_medio": 7.29,
+      "perda_media": -2.08,
+      "melhor": 58.94,
+      "pior": -6.09,
+      "dias": 9.0,
+      "stops": 0
+    },
+    {
+      "media": 21,
+      "variante": "stop",
+      "operacoes": 325,
+      "abertas": 9,
+      "acerto": 30.8,
+      "medio": 0.69,
+      "mediana": -1.04,
+      "ganho_medio": 6.37,
+      "perda_media": -1.83,
+      "melhor": 72.22,
+      "pior": -5.0,
+      "dias": 8.1,
+      "stops": 6
+    },
+    {
+      "media": 21,
+      "variante": "volume_stop",
+      "operacoes": 151,
+      "abertas": 6,
+      "acerto": 27.2,
+      "medio": 0.45,
+      "mediana": -1.34,
+      "ganho_medio": 7.29,
+      "perda_media": -2.09,
+      "melhor": 58.94,
+      "pior": -5.0,
+      "dias": 8.9,
+      "stops": 7
+    },
+    {
+      "media": 50,
+      "variante": "sem_filtro",
+      "operacoes": 210,
+      "abertas": 9,
+      "acerto": 24.8,
+      "medio": 0.79,
+      "mediana": -1.34,
+      "ganho_medio": 9.04,
+      "perda_media": -1.92,
+      "melhor": 86.04,
+      "pior": -5.55,
+      "dias": 12.7,
+      "stops": 0
+    },
+    {
+      "media": 50,
+      "variante": "volume",
+      "operacoes": 92,
+      "abertas": 6,
+      "acerto": 23.9,
+      "medio": 1.18,
+      "mediana": -1.49,
+      "ganho_medio": 11.11,
+      "perda_media": -1.94,
+      "melhor": 86.04,
+      "pior": -5.55,
+      "dias": 15.2,
+      "stops": 0
+    },
+    {
+      "media": 50,
+      "variante": "stop",
+      "operacoes": 211,
+      "abertas": 8,
+      "acerto": 24.6,
+      "medio": 0.75,
+      "mediana": -1.34,
+      "ganho_medio": 9.04,
+      "perda_media": -1.96,
+      "melhor": 86.04,
+      "pior": -5.15,
+      "dias": 12.7,
+      "stops": 7
+    },
+    {
+      "media": 50,
+      "variante": "volume_stop",
+      "operacoes": 94,
+      "abertas": 4,
+      "acerto": 23.4,
+      "medio": 1.03,
+      "mediana": -1.52,
+      "ganho_medio": 11.11,
+      "perda_media": -2.04,
+      "melhor": 86.04,
+      "pior": -5.0,
+      "dias": 15.0,
+      "stops": 5
+    }
+  ],
+  "melhores_acoes": {
+    "9:sem_filtro": [
+      {
+        "ticker": "SBSP3",
+        "soma": 34.1,
+        "operacoes": 17
+      },
+      {
+        "ticker": "CSAN3",
+        "soma": 32.9,
+        "operacoes": 18
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 27.2,
+        "operacoes": 16
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 27.1,
+        "operacoes": 18
+      },
+      {
+        "ticker": "VALE3",
+        "soma": 18.4,
+        "operacoes": 20
+      }
+    ],
+    "9:volume": [
+      {
+        "ticker": "ABEV3",
+        "soma": 19.9,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 17.4,
+        "operacoes": 10
+      },
+      {
+        "ticker": "GGBR4",
+        "soma": 16.7,
+        "operacoes": 8
+      },
+      {
+        "ticker": "CSAN3",
+        "soma": 16.4,
+        "operacoes": 6
+      },
+      {
+        "ticker": "ELET3",
+        "soma": 13.7,
+        "operacoes": 10
+      }
+    ],
+    "9:stop": [
+      {
+        "ticker": "CSAN3",
+        "soma": 32.9,
+        "operacoes": 18
+      },
+      {
+        "ticker": "SBSP3",
+        "soma": 32.9,
+        "operacoes": 17
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 27.2,
+        "operacoes": 16
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 27.1,
+        "operacoes": 18
+      },
+      {
+        "ticker": "CMIG4",
+        "soma": 18.2,
+        "operacoes": 16
+      }
+    ],
+    "9:volume_stop": [
+      {
+        "ticker": "ABEV3",
+        "soma": 19.9,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 17.4,
+        "operacoes": 10
+      },
+      {
+        "ticker": "GGBR4",
+        "soma": 16.7,
+        "operacoes": 8
+      },
+      {
+        "ticker": "CSAN3",
+        "soma": 16.0,
+        "operacoes": 6
+      },
+      {
+        "ticker": "ELET3",
+        "soma": 13.7,
+        "operacoes": 10
+      }
+    ],
+    "21:sem_filtro": [
+      {
+        "ticker": "SBSP3",
+        "soma": 96.5,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 69.9,
+        "operacoes": 9
+      },
+      {
+        "ticker": "RADL3",
+        "soma": 44.9,
+        "operacoes": 11
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 30.6,
+        "operacoes": 8
+      },
+      {
+        "ticker": "CMIG4",
+        "soma": 26.1,
+        "operacoes": 12
+      }
+    ],
+    "21:volume": [
+      {
+        "ticker": "BPAC11",
+        "soma": 74.2,
+        "operacoes": 7
+      },
+      {
+        "ticker": "ABEV3",
+        "soma": 32.2,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VIVT3",
+        "soma": 22.2,
+        "operacoes": 7
+      },
+      {
+        "ticker": "ELET3",
+        "soma": 18.5,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BBAS3",
+        "soma": 16.1,
+        "operacoes": 5
+      }
+    ],
+    "21:stop": [
+      {
+        "ticker": "SBSP3",
+        "soma": 95.2,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BPAC11",
+        "soma": 69.9,
+        "operacoes": 9
+      },
+      {
+        "ticker": "RADL3",
+        "soma": 44.9,
+        "operacoes": 11
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 30.6,
+        "operacoes": 8
+      },
+      {
+        "ticker": "CMIG4",
+        "soma": 26.1,
+        "operacoes": 12
+      }
+    ],
+    "21:volume_stop": [
+      {
+        "ticker": "BPAC11",
+        "soma": 74.2,
+        "operacoes": 7
+      },
+      {
+        "ticker": "ABEV3",
+        "soma": 32.2,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VIVT3",
+        "soma": 22.2,
+        "operacoes": 7
+      },
+      {
+        "ticker": "ELET3",
+        "soma": 18.5,
+        "operacoes": 7
+      },
+      {
+        "ticker": "BBAS3",
+        "soma": 16.1,
+        "operacoes": 5
+      }
+    ],
+    "50:sem_filtro": [
+      {
+        "ticker": "BPAC11",
+        "soma": 82.4,
+        "operacoes": 5
+      },
+      {
+        "ticker": "SBSP3",
+        "soma": 66.4,
+        "operacoes": 8
+      },
+      {
+        "ticker": "VIVT3",
+        "soma": 31.6,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VALE3",
+        "soma": 29.9,
+        "operacoes": 8
+      },
+      {
+        "ticker": "RADL3",
+        "soma": 22.4,
+        "operacoes": 10
+      }
+    ],
+    "50:volume": [
+      {
+        "ticker": "BPAC11",
+        "soma": 81.7,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VALE3",
+        "soma": 36.4,
+        "operacoes": 3
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 26.1,
+        "operacoes": 2
+      },
+      {
+        "ticker": "PETR4",
+        "soma": 23.4,
+        "operacoes": 2
+      },
+      {
+        "ticker": "BBAS3",
+        "soma": 11.1,
+        "operacoes": 4
+      }
+    ],
+    "50:stop": [
+      {
+        "ticker": "BPAC11",
+        "soma": 82.4,
+        "operacoes": 5
+      },
+      {
+        "ticker": "SBSP3",
+        "soma": 65.2,
+        "operacoes": 8
+      },
+      {
+        "ticker": "VIVT3",
+        "soma": 31.6,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VALE3",
+        "soma": 29.9,
+        "operacoes": 8
+      },
+      {
+        "ticker": "RADL3",
+        "soma": 22.4,
+        "operacoes": 10
+      }
+    ],
+    "50:volume_stop": [
+      {
+        "ticker": "BPAC11",
+        "soma": 81.7,
+        "operacoes": 5
+      },
+      {
+        "ticker": "VALE3",
+        "soma": 36.4,
+        "operacoes": 3
+      },
+      {
+        "ticker": "SUZB3",
+        "soma": 26.1,
+        "operacoes": 2
+      },
+      {
+        "ticker": "PETR4",
+        "soma": 23.4,
+        "operacoes": 2
+      },
+      {
+        "ticker": "BBAS3",
+        "soma": 11.1,
+        "operacoes": 4
+      }
+    ]
+  },
+  "aviso": "Sem custos de corretagem e impostos. Resultado passado não garante resultado futuro."
+}

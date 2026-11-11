@@ -1,4 +1,4 @@
-const CACHE = "medias-v2";
+const CACHE = "medias-v3";
 const ARQUIVOS = ["./", "index.html", "style.css", "app.js", "config.js", "manifest.webmanifest",
   "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png"];
 

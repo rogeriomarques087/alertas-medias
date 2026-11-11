@@ -51,7 +51,8 @@ p { margin: 0; }
 .barra-linha { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .atualizado { font-size: .875rem; color: var(--tinta-suave); min-height: 1.3em; }
 .atualizado.erro { color: var(--venda); }
-.abas { display: flex; gap: 22px; margin-top: 10px; }
+.abas { display: flex; gap: 18px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; }
+.abas::-webkit-scrollbar { display: none; }
 .abas button {
   font: inherit; font-weight: 500; color: var(--tinta-suave); background: none; border: 0;
   padding: 10px 0 9px; border-bottom: 3px solid transparent; cursor: pointer;
@@ -89,6 +90,8 @@ p { margin: 0; }
 .marca-compra { fill: var(--tinta); }
 .etiqueta { fill: var(--tinta); }
 .etiqueta-txt { font: 600 9.5px "IBM Plex Sans", system-ui, sans-serif; fill: var(--fundo); }
+.linha-stop { stroke: var(--venda); stroke-width: 1.2; stroke-dasharray: 5 3; }
+.stop-txt { fill: var(--venda); font-weight: 600; }
 .mira { stroke: var(--tinta); stroke-width: 1; stroke-dasharray: 2 2; pointer-events: none; }
 
 .leitura { margin-top: 4px; }
@@ -120,7 +123,7 @@ p { margin: 0; }
 .alerta-item + .alerta-item { border-top: 1px solid var(--linha); }
 .alerta-item .faixa { border-radius: 2px; background: var(--linha); }
 .alerta-item.compra .faixa { background: var(--compra); }
-.alerta-item.venda .faixa { background: var(--venda); }
+.alerta-item.venda .faixa, .alerta-item.stop .faixa { background: var(--venda); }
 .alerta-item.previa .faixa, .alerta-item.cancelado .faixa { opacity: .45; }
 .alerta-item .hora { font-size: .8125rem; color: var(--tinta-suave); }
 .alerta-item h3 { margin: 1px 0 2px; }
@@ -216,3 +219,28 @@ code { font-size: .875em; background: var(--superficie); border: 1px solid var(-
 .aviso.visivel { transform: none; visibility: visible; transition: transform .25s ease; }
 .aviso.erro { background: var(--venda); color: #fff; }
 @media (prefers-reduced-motion: reduce) { .aviso { transition: none; } }
+
+/* Resultados */
+#resultados h2:first-child { margin-top: 20px; }
+.numeros { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px; margin: 8px 0 14px; }
+.numeros dt { font-size: .8125rem; color: var(--tinta-suave); }
+.numeros dd { margin: 0; font-size: 1.375rem; font-weight: 700; letter-spacing: -0.01em; }
+.tabela { width: 100%; border-collapse: collapse; font-size: .9375rem; margin: 8px 0 10px; }
+.tabela th, .tabela td { text-align: right; padding: 8px 4px; border-bottom: 1px solid var(--linha); }
+.tabela th:first-child { text-align: left; }
+.tabela thead th { font-size: .8125rem; font-weight: 500; color: var(--tinta-suave); }
+.tabela tbody th { font-weight: 600; }
+.tabela tr.melhor td, .tabela tr.melhor th { background: var(--superficie); }
+.tabela tr.melhor td:nth-child(4) { font-weight: 700; }
+.segmentos { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
+.segmentos button {
+  font: inherit; font-size: .875rem; font-weight: 500; min-height: 36px; padding: 0 12px; cursor: pointer;
+  border: 1.5px solid var(--linha); border-radius: 999px; background: transparent; color: var(--tinta);
+}
+.segmentos button[aria-pressed="true"] { background: var(--tinta); color: var(--fundo); border-color: var(--tinta); }
+.destaque { margin: 10px 0 4px; padding: 12px 14px; border-left: 4px solid var(--compra); background: var(--superficie); border-radius: 0 10px 10px 0; }
+.ops li { padding: 10px 0; }
+.ops li + li { border-top: 1px solid var(--linha); }
+.ops h3 { font-size: 1.0625rem; }
+.itens small { color: var(--tinta-suave); font-size: .8125rem; }
+dialog .ajuda { margin: 4px 0 0; font-size: .8125rem; }

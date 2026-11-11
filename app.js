@@ -12,6 +12,7 @@
   const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
   const brl = (v) => (v == null || Number.isNaN(v) ? "—" : moeda.format(v));
   const num1 = (v) => Math.abs(v).toFixed(1).replace(".", ",");
+  const numCurto = (v) => String(Math.round(Math.abs(v) * 10) / 10).replace(".", ",");
   const pct = (v) => (v == null ? "" : (v > 0 ? "+" : v < 0 ? "−" : "") + num1(v) + "%");
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const COR = { 9: "var(--mm9)", 21: "var(--mm21)", 50: "var(--mm50)" };
@@ -47,6 +48,7 @@
   const ARQ = {
     painel: "saida/painel.json", alertas: "saida/notificacoes.json",
     carteira: "dados/carteira.json", config: "dados/config.json",
+    operacoes: "dados/operacoes.json", backtest: "saida/backtest.json",
   };
   const demoGravado = {};
 
@@ -83,8 +85,12 @@
         headers: { ...this.cab(), Authorization: `Bearer ${token}` }, cache: "no-store",
       });
       if (!r.ok) throw new Error(this.erro(r.status));
-      const j = await r.json();
-      if (j.permissions && !j.permissions.push) throw new Error("O token só lê. Ele precisa de Contents: Read and write.");
+      // o teste de verdade: o token consegue ler os arquivos do monitor? (Contents)
+      const c = await fetch(`https://api.github.com/repos/${repo}/contents/dados`, {
+        headers: { ...this.cab(), Authorization: `Bearer ${token}` }, cache: "no-store",
+      });
+      if (c.status === 403 || c.status === 401) throw new Error("O token entra no repositório, mas não lê os arquivos. Ele precisa de Contents: Read and write.");
+      if (!c.ok && c.status !== 404) throw new Error(this.erro(c.status));
     },
     async ler(caminho) {
       if (DEMO) {
@@ -117,7 +123,7 @@
   };
 
   // ---------- dados ----------
-  let dados = { painel: null, alertas: [], carteira: {}, config: {} };
+  let dados = { painel: null, alertas: [], carteira: {}, config: {}, operacoes: [], backtest: null };
   let erroCarga = null, carregando = false, ultimaCarga = 0;
   try { const c = JSON.parse(LS.get("cache-dados") || "null"); if (c && !DEMO) dados = c; } catch { /* ignora */ }
 
@@ -127,9 +133,12 @@
     $("#recarregar").disabled = true;
     $("#atualizado").textContent = "Atualizando…";
     try {
-      const [p, a, c, f] = await Promise.all(
-        [ARQ.painel, ARQ.alertas, ARQ.carteira, ARQ.config].map((x) => gh.ler(x)));
-      dados = { painel: p.dados, alertas: a.dados || [], carteira: c.dados || {}, config: f.dados || {} };
+      const [p, a, c, f, o, b] = await Promise.all(
+        [ARQ.painel, ARQ.alertas, ARQ.carteira, ARQ.config, ARQ.operacoes, ARQ.backtest].map((x) => gh.ler(x)));
+      dados = {
+        painel: p.dados, alertas: a.dados || [], carteira: c.dados || {}, config: f.dados || {},
+        operacoes: Array.isArray(o.dados) ? o.dados : [], backtest: b.dados,
+      };
       if (!DEMO) LS.set("cache-dados", JSON.stringify(dados));
       erroCarga = null;
       ultimaCarga = Date.now();
@@ -142,7 +151,7 @@
   }
 
   // ---------- abas ----------
-  const ABAS = ["carteira", "alertas", "ajustes"];
+  const ABAS = ["carteira", "alertas", "resultados", "ajustes"];
   function abrirAba(nome, salvar = true) {
     if (!ABAS.includes(nome)) nome = "carteira";
     for (const a of ABAS) {
@@ -171,6 +180,7 @@
     renderBarra();
     renderCarteira();
     renderAlertas();
+    renderResultados();
     renderAjustes();
   }
 
@@ -211,6 +221,7 @@
     const n = g.c.length, passo = (X1 - X0) / n, corpo = Math.max(1.6, passo * 0.62);
     const vals = [...g.h, ...g.l];
     for (const s of Object.values(g.mm)) for (const v of s) if (v != null) vals.push(v);
+    if (opts.stop) vals.push(opts.stop);
     let lo = Math.min(...vals), hi = Math.max(...vals);
     const folga = (hi - lo) * 0.05 || hi * 0.01;
     lo -= folga; hi += folga;
@@ -254,6 +265,10 @@
         svg += `<line class="linha-compra" x1="${f(xi)}" x2="${X1}" y1="${f(y(opts.compra.preco))}" y2="${f(y(opts.compra.preco))}"/>` +
           `<path class="marca-compra" d="M${f(xi)} ${f(yb)} l5 8 h-10 z"/>`;
       }
+    }
+    if (opts.stop) {
+      svg += `<line class="linha-stop" x1="${X0}" x2="${X1}" y1="${f(y(opts.stop))}" y2="${f(y(opts.stop))}"/>` +
+        `<text class="eixo stop-txt" x="${X0 + 3}" y="${f(y(opts.stop) - 3)}">stop ${n2(opts.stop)}</text>`;
     }
     const ult = g.c[n - 1];
     svg += `<rect class="etiqueta" x="${X1 + 1}" y="${f(y(ult) - 8)}" width="${W - X1 - 1}" height="16" rx="4"/>` +
@@ -323,11 +338,13 @@
       const pos = carteira[t];
       const a = dados.painel?.ativos?.[t];
       const mm = Number(pos.media);
+      const stop = nivelStop(pos);
       let h = `<li class="ativo"><div class="ativo-topo"><h3>${esc(t)}</h3>`;
       if (a) h += `<p class="preco">${brl(a.preco)}<span class="${a.variacao_dia >= 0 ? "sobe" : "cai"}">${pct(a.variacao_dia)}</span></p>`;
       h += "</div>";
       if (a) {
-        h += grafico(`c-${t}`, a, { saida: mm, compra: { data: pos.data, preco: pos.preco }, emAndamento: a.origem === "pregão" });
+        h += grafico(`c-${t}`, a, { saida: mm, compra: { data: pos.data, preco: pos.preco },
+          emAndamento: a.origem === "pregão", stop: stop?.preco });
         const s = a.medias?.[String(mm)];
         if (s && s.lado === "abaixo") {
           h += `<p class="saida alerta">Está abaixo da média de ${mm} (${brl(s.valor)}). ` +
@@ -341,12 +358,30 @@
       } else {
         h += `<p class="saida">Aguardando a próxima rodada do monitor.</p>`;
       }
+      if (stop) {
+        h += a && a.preco <= stop.preco
+          ? `<p class="saida alerta">Abaixo do stop de ${numCurto(stop.pct)}% (${brl(stop.preco)}).</p>`
+          : `<p class="saida">Stop de ${numCurto(stop.pct)}% em <strong>${brl(stop.preco)}</strong>.</p>`;
+      }
+      if (a?.volume_rel != null) h += `<p class="compra-info">${volTxt(a.volume_rel)} hoje</p>`;
       const res = a && pos.preco ? (a.preco / pos.preco - 1) * 100 : null;
       h += `<p class="compra-info">Comprou a ${brl(pos.preco)}${pos.data ? ` em ${dataCurta(pos.data)}` : ""}` +
         (res != null ? `, <span class="${res >= 0 ? "sobe" : "cai"}">${pct(res)}</span>` : "") + "</p>";
       h += `<button type="button" class="botao secundario pequeno" data-vender="${esc(t)}">Registrar venda</button></li>`;
       return h;
     }).join("");
+  }
+
+  function stopPadrao() {
+    return Number(dados.painel?.stop_percentual ?? dados.config?.stop_percentual ?? 5);
+  }
+  function nivelStop(pos) {
+    const p = Number(pos?.stop ?? stopPadrao());
+    if (!pos?.preco || !(p > 0)) return null;
+    return { pct: p, preco: Math.round(pos.preco * (1 - p / 100) * 100) / 100 };
+  }
+  function volTxt(v) {
+    return v == null ? "" : `volume ${num1(v)}× a média`;
   }
 
   function retratoDe(ticker) {
@@ -385,7 +420,7 @@
         <h3>${esc(m.titulo)}</h3>`;
       if (m.etapa === "resumo" && Array.isArray(m.itens)) {
         html += `<ul class="itens">${m.itens.map((i) => `<li><span>${nomeAcao(i.ticker)}
-          média ${esc(i.medias.join(", "))}, ${brl(i.preco)}</span>${botaoComprei(i.ticker, i.medias, i.preco)}</li>`).join("")}</ul>`;
+          média ${esc(i.medias.join(", "))}, ${brl(i.preco)}${i.vol != null ? `<br><small>${volTxt(i.vol)}</small>` : ""}</span>${botaoComprei(i.ticker, i.medias, i.preco)}</li>`).join("")}</ul>`;
       } else {
         html += `<p class="corpo">${esc(m.corpo)}</p>`;
         const botoes = [];
@@ -395,12 +430,107 @@
         if (m.acao === "compra" && (m.etapa === "previa" || m.etapa === "confirmado") && m.ticker) {
           botoes.push(botaoComprei(m.ticker, m.medias, m.preco));
         }
+        if ((m.acao === "venda" || m.acao === "stop") && m.ticker && dados.carteira?.[m.ticker]) {
+          botoes.push(`<button type="button" class="botao secundario pequeno" data-vender="${esc(m.ticker)}">Registrar venda</button>`);
+        }
         if (botoes.length) html += `<div class="linha">${botoes.join("")}</div>`;
       }
       html += "</div></div>";
     }
     box.innerHTML = html + "</div>";
   }
+
+  // ---------- resultados: suas operações + backtest ----------
+  const dataBR = (iso) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : "");
+  const cor = (v) => (v >= 0 ? "sobe" : "cai");
+  let varianteBT = LS.get("bt-variante") || "volume";
+
+  function statsOps(ops) {
+    const r = ops.map((o) => Number(o.resultado)).filter((x) => !Number.isNaN(x));
+    if (!r.length) return null;
+    const soma = r.reduce((a, b) => a + b, 0);
+    return { n: r.length, acerto: (100 * r.filter((x) => x > 0).length) / r.length, medio: soma / r.length, soma };
+  }
+
+  function renderResultados() {
+    const box = $("#conteudo-resultados");
+    if (!gh.conectado()) {
+      box.innerHTML = `<p class="ajuda" style="margin-top:20px">Conecte o app em Ajustes para ver os resultados.</p>`;
+      return;
+    }
+    let h = `<h2>Suas operações</h2>`;
+    const ops = [...(dados.operacoes || [])].sort((a, b) => (b.data_venda || "").localeCompare(a.data_venda || ""));
+    const st = statsOps(ops);
+    if (!st) {
+      h += `<p class="ajuda">Ainda não há operações encerradas. Quando você registrar uma venda, ela aparece aqui com o resultado.</p>`;
+    } else {
+      h += `<dl class="numeros">
+        <div><dt>Operações</dt><dd>${st.n}</dd></div>
+        <div><dt>Acertos</dt><dd>${num1(st.acerto)}%</dd></div>
+        <div><dt>Média por operação</dt><dd class="${cor(st.medio)}">${pct(st.medio)}</dd></div>
+        <div><dt>Soma</dt><dd class="${cor(st.soma)}">${pct(st.soma)}</dd></div>
+      </dl>`;
+      const porMedia = [9, 21, 50].map((p) => [p, statsOps(ops.filter((o) => Number(o.media) === p))]).filter(([, s]) => s);
+      if (porMedia.length) {
+        h += `<table class="tabela"><thead><tr><th scope="col">Saída</th><th scope="col">Operações</th><th scope="col">Acertos</th><th scope="col">Média</th></tr></thead><tbody>` +
+          porMedia.map(([p, s]) => `<tr><th scope="row"><span class="leg l${p}">MM${p}</span></th><td>${s.n}</td><td>${num1(s.acerto)}%</td><td class="${cor(s.medio)}">${pct(s.medio)}</td></tr>`).join("") +
+          `</tbody></table>`;
+      }
+      h += `<ul class="lista ops">` + ops.slice(0, 40).map((o) => `<li>
+          <div class="ativo-topo"><h3>${esc(o.ticker)}</h3><p class="preco ${cor(o.resultado)}">${pct(o.resultado)}</p></div>
+          <p class="compra-info">MM${esc(o.media)}${o.motivo === "stop" ? ", saiu no stop" : ""}: comprou a ${brl(o.preco_compra)} em ${dataCurta(o.data_compra || "")},
+          vendeu a ${brl(o.preco_venda)} em ${dataCurta(o.data_venda || "")}</p></li>`).join("") + `</ul>`;
+    }
+
+    h += `<h2>Backtest das médias</h2>`;
+    const bt = dados.backtest;
+    if (!bt?.resultados) {
+      h += `<p class="ajuda">O backtest ainda não rodou. Ele roda sozinho todo dia 1º do mês, ou na hora pelo GitHub:
+        monitor-acoes › Actions › Backtest › Run workflow.</p>`;
+    } else {
+      const vars = Object.keys(bt.variantes);
+      if (!vars.includes(varianteBT)) varianteBT = vars[0];
+      const comOps = bt.resultados.filter((r) => r.operacoes);
+      const geral = comOps.reduce((a, b) => (b.medio > a.medio ? b : a), comOps[0]);
+      h += `<p class="ajuda">De ${dataBR(bt.inicio)} a ${dataBR(bt.fim)}, ${bt.acoes_analisadas} ações do Ibovespa, média ${esc(bt.tipo_media)}.
+        Compra na abertura do dia seguinte ao rompimento e vende na abertura do dia seguinte à perda da mesma média.</p>`;
+      if (geral) {
+        h += `<p class="destaque">Melhor combinação no período: <strong>média de ${geral.media}, ${esc(bt.variantes[geral.variante].toLowerCase())}</strong>.
+          Resultado médio de <span class="${cor(geral.medio)}">${pct(geral.medio)}</span> por operação, ${num1(geral.acerto)}% de acertos em ${geral.operacoes} operações.</p>`;
+      }
+      h += `<div class="segmentos" role="group" aria-label="Variação do backtest">` +
+        vars.map((v) => `<button type="button" data-variante="${esc(v)}" aria-pressed="${v === varianteBT}">${esc(bt.variantes[v])}</button>`).join("") + `</div>`;
+      const linhas = bt.resultados.filter((r) => r.variante === varianteBT);
+      const melhorLinha = linhas.filter((r) => r.operacoes).reduce((a, b) => (!a || b.medio > a.medio ? b : a), null);
+      h += `<table class="tabela"><thead><tr><th scope="col">Média</th><th scope="col">Operações</th><th scope="col">Acertos</th><th scope="col">Média/op.</th><th scope="col">Dias</th></tr></thead><tbody>` +
+        linhas.map((r) => r.operacoes
+          ? `<tr class="${r === melhorLinha ? "melhor" : ""}"><th scope="row"><span class="leg l${r.media}">MM${r.media}</span></th><td>${r.operacoes}</td><td>${num1(r.acerto)}%</td><td class="${cor(r.medio)}">${pct(r.medio)}</td><td>${num1(r.dias)}</td></tr>`
+          : `<tr><th scope="row"><span class="leg l${r.media}">MM${r.media}</span></th><td colspan="4">sem operações</td></tr>`).join("") +
+        `</tbody></table>`;
+      if (melhorLinha) {
+        h += `<p class="compra-info">Nas operações da MM${melhorLinha.media}: ganho médio de ${pct(melhorLinha.ganho_medio)} quando acerta e perda média de ${pct(melhorLinha.perda_media)} quando erra.` +
+          (melhorLinha.stops ? ` ${melhorLinha.stops} saíram no stop.` : "") + `</p>`;
+        const top = bt.melhores_acoes?.[`${melhorLinha.media}:${varianteBT}`] || [];
+        if (top.length) {
+          h += `<p class="compra-info">Ações que mais renderam com a MM${melhorLinha.media}: ` +
+            top.map((t) => `${esc(t.ticker)} (${pct(t.soma)})`).join(", ") + `.</p>`;
+        }
+      }
+      if (bt.comprar_e_segurar_medio != null) {
+        h += `<p class="compra-info">Referência: no mesmo período, quem comprou e segurou as ações teve ${pct(bt.comprar_e_segurar_medio)} em média.</p>`;
+      }
+      h += `<p class="rodape">${esc(bt.aviso || "")} Atualizado em ${dataBR((bt.gerado_em || "").slice(0, 10))}.</p>`;
+    }
+    box.innerHTML = h;
+  }
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-variante]");
+    if (!b) return;
+    varianteBT = b.dataset.variante;
+    LS.set("bt-variante", varianteBT);
+    renderResultados();
+  });
 
   function renderAjustes() {
     const repo = gh.repo();
@@ -443,6 +573,7 @@
       saida: pos ? Number(pos.media) : null,
       compra: pos ? { data: pos.data, preco: pos.preco } : null,
       emAndamento: a.origem === "pregão",
+      stop: pos ? nivelStop(pos)?.preco : null,
     });
     const acima = Object.entries(a.medias || {}).filter(([, m]) => m.lado === "acima").map(([p]) => p);
     $("#g-texto").textContent = acima.length
@@ -466,27 +597,32 @@
     const lista = (medias || "").split(",").filter(Boolean);
     if (lista.length === 1) fCompra.querySelector(`input[name="media"][value="${lista[0]}"]`).checked = true;
     if (preco) fCompra.preco.value = Number(preco).toFixed(2).replace(".", ",");
+    fCompra.stop.value = String(stopPadrao()).replace(".", ",");
     dlgCompra.showModal();
     (ticker ? (lista.length === 1 ? fCompra.preco : fCompra.querySelector('input[name="media"]')) : fCompra.ticker).focus();
   }
+  const numero = (txt) => Number(String(txt).trim().replace(/\./g, (m, i, s) => (s.includes(",") ? "" : ".")).replace(",", "."));
   fCompra.addEventListener("submit", async (e) => {
     e.preventDefault();
     const ticker = fCompra.ticker.value.trim().toUpperCase();
     const media = Number(new FormData(fCompra).get("media"));
-    const preco = Number(fCompra.preco.value.trim().replace(/\./g, (m, i, s) => (s.includes(",") ? "" : ".")).replace(",", "."));
+    const preco = numero(fCompra.preco.value);
+    const stop = fCompra.stop.value.trim() === "" ? 0 : numero(fCompra.stop.value);
     if (!/^[A-Z]{4}\d{1,2}$/.test(ticker)) { $("#c-erro").textContent = "Código da ação inválido. Exemplo: PETR4."; return; }
     if (!media) { $("#c-erro").textContent = "Escolha a média que vai usar para vender."; return; }
     if (!(preco > 0)) { $("#c-erro").textContent = "Informe o preço pago. Exemplo: 38,40."; return; }
+    if (!(stop >= 0 && stop < 50)) { $("#c-erro").textContent = "Stop entre 0 e 50%. Use 0 para não ter stop."; return; }
     const bt = fCompra.querySelector('[type="submit"]');
     bt.disabled = true;
     try {
       dados.carteira = await gh.alterar(ARQ.carteira, (c) => {
-        c[ticker] = { media, preco: Math.round(preco * 100) / 100, data: hojeISO() };
+        c[ticker] = { media, preco: Math.round(preco * 100) / 100, data: hojeISO(), stop };
         return c;
-      }, `Painel: comprei ${ticker} (média de ${media})`);
+      }, `Painel: comprei ${ticker} (média de ${media}, stop ${stop}%)`);
       dlgCompra.close();
       render();
-      avisar(`${ticker} entrou na carteira. O monitor avisa se fechar abaixo da média de ${media}.`);
+      avisar(`${ticker} entrou na carteira. O monitor avisa se fechar abaixo da média de ${media}` +
+        (stop > 0 ? ` ou cair ${numCurto(stop)}%.` : "."));
     } catch (err) {
       $("#c-erro").textContent = err.message;
     } finally {
@@ -498,21 +634,46 @@
   let vendendo = "";
   function abrirVenda(ticker) {
     vendendo = ticker;
-    $("#v-texto").textContent = `Tirar ${ticker} da carteira? O monitor para de mandar alertas de venda para ela.`;
+    fVenda.reset();
+    $("#v-erro").textContent = "";
+    const pos = dados.carteira?.[ticker];
+    const atual = dados.painel?.ativos?.[ticker]?.preco;
+    $("#v-titulo").textContent = `Registrar venda de ${ticker}`;
+    $("#v-texto").textContent = pos
+      ? `Comprou a ${brl(pos.preco)}${pos.data ? ` em ${dataCurta(pos.data)}` : ""}. O resultado vai para a aba Resultados e o monitor para de acompanhar a ação.`
+      : "O monitor para de acompanhar a ação.";
+    if (atual) fVenda.preco.value = Number(atual).toFixed(2).replace(".", ",");
     dlgVenda.showModal();
+    fVenda.preco.focus();
   }
   fVenda.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const precoVenda = numero(fVenda.preco.value);
+    if (!(precoVenda > 0)) { $("#v-erro").textContent = "Informe o preço de venda. Exemplo: 41,20."; return; }
+    const pos = dados.carteira?.[vendendo];
     const bt = fVenda.querySelector('[type="submit"]');
     bt.disabled = true;
     try {
+      if (pos?.preco) {
+        const stop = nivelStop(pos);
+        const op = {
+          ticker: vendendo, media: Number(pos.media), stop: pos.stop ?? stopPadrao(),
+          preco_compra: pos.preco, data_compra: pos.data || null,
+          preco_venda: Math.round(precoVenda * 100) / 100, data_venda: hojeISO(),
+          resultado: Math.round((precoVenda / pos.preco - 1) * 10000) / 100,
+          motivo: stop && precoVenda <= stop.preco ? "stop" : "media",
+        };
+        dados.operacoes = await gh.alterar(ARQ.operacoes, (lista) => [...(Array.isArray(lista) ? lista : []), op],
+          `Painel: resultado ${vendendo} ${op.resultado}%`);
+      }
       dados.carteira = await gh.alterar(ARQ.carteira, (c) => { delete c[vendendo]; return c; },
         `Painel: vendi ${vendendo}`);
       dlgVenda.close();
       render();
-      avisar(`Venda de ${vendendo} registrada.`);
+      const res = pos?.preco ? (precoVenda / pos.preco - 1) * 100 : null;
+      avisar(`Venda de ${vendendo} registrada${res != null ? `: ${pct(res)}` : ""}.`);
     } catch (err) {
-      avisar(err.message, "erro");
+      $("#v-erro").textContent = err.message;
     } finally {
       bt.disabled = false;
     }

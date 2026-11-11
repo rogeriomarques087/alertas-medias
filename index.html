@@ -28,6 +28,7 @@
     <nav class="abas" role="tablist" aria-label="Seções">
       <button type="button" role="tab" id="tab-carteira" aria-controls="carteira" data-aba="carteira">Carteira</button>
       <button type="button" role="tab" id="tab-alertas" aria-controls="alertas" data-aba="alertas">Alertas</button>
+      <button type="button" role="tab" id="tab-resultados" aria-controls="resultados" data-aba="resultados">Resultados</button>
       <button type="button" role="tab" id="tab-ajustes" aria-controls="ajustes" data-aba="ajustes">Ajustes</button>
     </nav>
   </header>
@@ -40,6 +41,10 @@
 
     <section id="alertas" role="tabpanel" aria-labelledby="tab-alertas" hidden>
       <div id="lista-alertas"></div>
+    </section>
+
+    <section id="resultados" role="tabpanel" aria-labelledby="tab-resultados" hidden>
+      <div id="conteudo-resultados"></div>
     </section>
 
     <section id="ajustes" role="tabpanel" aria-labelledby="tab-ajustes" hidden>
@@ -124,6 +129,10 @@
       <label for="c-preco">Preço pago</label>
       <input id="c-preco" name="preco" required inputmode="decimal" autocomplete="off" placeholder="38,40"
              pattern="\s*\d+([.,]\d{1,4})?\s*">
+      <label for="c-stop">Stop (% abaixo do preço pago)</label>
+      <input id="c-stop" name="stop" inputmode="decimal" autocomplete="off" placeholder="5"
+             pattern="\s*\d{1,2}([.,]\d)?\s*" aria-describedby="c-stop-ajuda">
+      <p id="c-stop-ajuda" class="ajuda">Avisa se cair esse tanto, mesmo sem perder a média. Use 0 para não ter stop.</p>
       <p id="c-erro" class="estado erro" role="alert"></p>
       <div class="linha">
         <button type="submit" value="salvar" class="botao">Salvar compra</button>
@@ -132,10 +141,14 @@
     </form>
   </dialog>
 
-  <dialog id="dlg-venda" aria-labelledby="dlg-venda-titulo">
+  <dialog id="dlg-venda" aria-labelledby="v-titulo">
     <form method="dialog" id="form-venda" class="formulario">
-      <h2 id="dlg-venda-titulo">Registrar venda</h2>
+      <h2 id="v-titulo">Registrar venda</h2>
       <p id="v-texto"></p>
+      <label for="v-preco">Preço de venda</label>
+      <input id="v-preco" name="preco" required inputmode="decimal" autocomplete="off" placeholder="41,20"
+             pattern="\s*\d+([.,]\d{1,4})?\s*">
+      <p id="v-erro" class="estado erro" role="alert"></p>
       <div class="linha">
         <button type="submit" value="salvar" class="botao vender">Registrar venda</button>
         <button type="button" class="botao secundario" data-fechar>Cancelar</button>

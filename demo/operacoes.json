@@ -1,0 +1,57 @@
+[
+  {
+    "ticker": "ITUB4",
+    "media": 21,
+    "stop": 5,
+    "preco_compra": 33.1,
+    "data_compra": "2026-09-02",
+    "preco_venda": 35.42,
+    "data_venda": "2026-09-23",
+    "resultado": 7.01,
+    "motivo": "media"
+  },
+  {
+    "ticker": "BBAS3",
+    "media": 9,
+    "stop": 5,
+    "preco_compra": 27.8,
+    "data_compra": "2026-09-15",
+    "preco_venda": 27.21,
+    "data_venda": "2026-09-19",
+    "resultado": -2.12,
+    "motivo": "media"
+  },
+  {
+    "ticker": "RENT3",
+    "media": 9,
+    "stop": 5,
+    "preco_compra": 45.0,
+    "data_compra": "2026-10-01",
+    "preco_venda": 42.7,
+    "data_venda": "2026-10-06",
+    "resultado": -5.11,
+    "motivo": "stop"
+  },
+  {
+    "ticker": "SUZB3",
+    "media": 21,
+    "stop": 5,
+    "preco_compra": 52.3,
+    "data_compra": "2026-10-08",
+    "preco_venda": 56.95,
+    "data_venda": "2026-10-29",
+    "resultado": 8.89,
+    "motivo": "media"
+  },
+  {
+    "ticker": "PRIO3",
+    "media": 50,
+    "stop": 8,
+    "preco_compra": 41.0,
+    "data_compra": "2026-08-20",
+    "preco_venda": 44.1,
+    "data_venda": "2026-10-30",
+    "resultado": 7.56,
+    "motivo": "media"
+  }
+]
