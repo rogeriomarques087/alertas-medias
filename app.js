@@ -591,6 +591,7 @@
 
   const dlgCompra = $("#dlg-compra"), fCompra = $("#form-compra");
   function abrirCompra(ticker, medias, preco) {
+    precoJaConfirmado = null;
     fCompra.reset();
     $("#c-erro").textContent = "";
     fCompra.ticker.value = ticker;
@@ -601,6 +602,19 @@
     dlgCompra.showModal();
     (ticker ? (lista.length === 1 ? fCompra.preco : fCompra.querySelector('input[name="media"]')) : fCompra.ticker).focus();
   }
+  // Confere se o preço digitado faz sentido (ex.: 4120 em vez de 41,20). Se estiver muito longe
+  // da referência, avisa e só aceita quando a pessoa tocar de novo com o mesmo valor.
+  let precoJaConfirmado = null;
+  function precoConferido(preco, referencia, alvoErro, nomeRef) {
+    if (!referencia || precoJaConfirmado === preco) return true;
+    const razao = preco / referencia;
+    if (razao <= 1.5 && razao >= 0.5) return true;
+    precoJaConfirmado = preco;
+    $(alvoErro).textContent = `${brl(preco)} está muito longe do preço ${nomeRef} (${brl(referencia)}). ` +
+      "Confira a vírgula. Se estiver certo, toque no botão de novo.";
+    return false;
+  }
+
   const numero = (txt) => Number(String(txt).trim().replace(/\./g, (m, i, s) => (s.includes(",") ? "" : ".")).replace(",", "."));
   fCompra.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -612,6 +626,7 @@
     if (!media) { $("#c-erro").textContent = "Escolha a média que vai usar para vender."; return; }
     if (!(preco > 0)) { $("#c-erro").textContent = "Informe o preço pago. Exemplo: 38,40."; return; }
     if (!(stop >= 0 && stop < 50)) { $("#c-erro").textContent = "Stop entre 0 e 50%. Use 0 para não ter stop."; return; }
+    if (!precoConferido(preco, retratoDe(ticker)?.preco, "#c-erro", "atual")) return;
     const bt = fCompra.querySelector('[type="submit"]');
     bt.disabled = true;
     try {
@@ -634,6 +649,7 @@
   let vendendo = "";
   function abrirVenda(ticker) {
     vendendo = ticker;
+    precoJaConfirmado = null;
     fVenda.reset();
     $("#v-erro").textContent = "";
     const pos = dados.carteira?.[ticker];
@@ -651,6 +667,7 @@
     const precoVenda = numero(fVenda.preco.value);
     if (!(precoVenda > 0)) { $("#v-erro").textContent = "Informe o preço de venda. Exemplo: 41,20."; return; }
     const pos = dados.carteira?.[vendendo];
+    if (!precoConferido(precoVenda, pos?.preco, "#v-erro", "de compra")) return;
     const bt = fVenda.querySelector('[type="submit"]');
     bt.disabled = true;
     try {
