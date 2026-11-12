@@ -523,5 +523,992 @@
       }
     ]
   },
-  "aviso": "Sem custos de corretagem e impostos. Resultado passado não garante resultado futuro."
+  "aviso": "Sem custos de corretagem e impostos. Resultado passado não garante resultado futuro.",
+  "confirmacao": {
+    "acoes_analisadas": 25,
+    "acoes_sem_dados": [],
+    "total_sinais": 5420,
+    "filtros": {
+      "sem_filtro": "Sem filtro",
+      "folga_05": "Folga de 0,5%",
+      "folga_1": "Folga de 1%",
+      "volume": "Volume 1,2×",
+      "folga_05_volume": "Folga 0,5% + volume"
+    },
+    "linhas": [
+      {
+        "media": "todas",
+        "horas_antes": 7,
+        "filtro": "folga_05",
+        "sinais": 60,
+        "confirmados": 78.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 7,
+        "filtro": "folga_05_volume",
+        "sinais": 2,
+        "confirmados": 50.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 7,
+        "filtro": "folga_1",
+        "sinais": 6,
+        "confirmados": 83.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 7,
+        "filtro": "sem_filtro",
+        "sinais": 209,
+        "confirmados": 59.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 7,
+        "filtro": "volume",
+        "sinais": 6,
+        "confirmados": 33.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 6,
+        "filtro": "folga_05",
+        "sinais": 174,
+        "confirmados": 79.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 6,
+        "filtro": "folga_05_volume",
+        "sinais": 16,
+        "confirmados": 87.5
+      },
+      {
+        "media": "todas",
+        "horas_antes": 6,
+        "filtro": "folga_1",
+        "sinais": 33,
+        "confirmados": 87.9
+      },
+      {
+        "media": "todas",
+        "horas_antes": 6,
+        "filtro": "sem_filtro",
+        "sinais": 581,
+        "confirmados": 65.1
+      },
+      {
+        "media": "todas",
+        "horas_antes": 6,
+        "filtro": "volume",
+        "sinais": 44,
+        "confirmados": 70.5
+      },
+      {
+        "media": "todas",
+        "horas_antes": 5,
+        "filtro": "folga_05",
+        "sinais": 251,
+        "confirmados": 85.3
+      },
+      {
+        "media": "todas",
+        "horas_antes": 5,
+        "filtro": "folga_05_volume",
+        "sinais": 21,
+        "confirmados": 81.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 5,
+        "filtro": "folga_1",
+        "sinais": 71,
+        "confirmados": 98.6
+      },
+      {
+        "media": "todas",
+        "horas_antes": 5,
+        "filtro": "sem_filtro",
+        "sinais": 681,
+        "confirmados": 74.6
+      },
+      {
+        "media": "todas",
+        "horas_antes": 5,
+        "filtro": "volume",
+        "sinais": 51,
+        "confirmados": 72.5
+      },
+      {
+        "media": "todas",
+        "horas_antes": 4,
+        "filtro": "folga_05",
+        "sinais": 362,
+        "confirmados": 91.2
+      },
+      {
+        "media": "todas",
+        "horas_antes": 4,
+        "filtro": "folga_05_volume",
+        "sinais": 27,
+        "confirmados": 85.2
+      },
+      {
+        "media": "todas",
+        "horas_antes": 4,
+        "filtro": "folga_1",
+        "sinais": 123,
+        "confirmados": 99.2
+      },
+      {
+        "media": "todas",
+        "horas_antes": 4,
+        "filtro": "sem_filtro",
+        "sinais": 809,
+        "confirmados": 81.1
+      },
+      {
+        "media": "todas",
+        "horas_antes": 4,
+        "filtro": "volume",
+        "sinais": 54,
+        "confirmados": 75.9
+      },
+      {
+        "media": "todas",
+        "horas_antes": 3,
+        "filtro": "folga_05",
+        "sinais": 484,
+        "confirmados": 95.7
+      },
+      {
+        "media": "todas",
+        "horas_antes": 3,
+        "filtro": "folga_05_volume",
+        "sinais": 38,
+        "confirmados": 92.1
+      },
+      {
+        "media": "todas",
+        "horas_antes": 3,
+        "filtro": "folga_1",
+        "sinais": 200,
+        "confirmados": 100.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 3,
+        "filtro": "sem_filtro",
+        "sinais": 917,
+        "confirmados": 85.9
+      },
+      {
+        "media": "todas",
+        "horas_antes": 3,
+        "filtro": "volume",
+        "sinais": 65,
+        "confirmados": 80.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 2,
+        "filtro": "folga_05",
+        "sinais": 604,
+        "confirmados": 96.2
+      },
+      {
+        "media": "todas",
+        "horas_antes": 2,
+        "filtro": "folga_05_volume",
+        "sinais": 38,
+        "confirmados": 94.7
+      },
+      {
+        "media": "todas",
+        "horas_antes": 2,
+        "filtro": "folga_1",
+        "sinais": 307,
+        "confirmados": 100.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 2,
+        "filtro": "sem_filtro",
+        "sinais": 1034,
+        "confirmados": 87.5
+      },
+      {
+        "media": "todas",
+        "horas_antes": 2,
+        "filtro": "volume",
+        "sinais": 74,
+        "confirmados": 83.8
+      },
+      {
+        "media": "todas",
+        "horas_antes": 1,
+        "filtro": "folga_05",
+        "sinais": 696,
+        "confirmados": 98.4
+      },
+      {
+        "media": "todas",
+        "horas_antes": 1,
+        "filtro": "folga_05_volume",
+        "sinais": 39,
+        "confirmados": 100.0
+      },
+      {
+        "media": "todas",
+        "horas_antes": 1,
+        "filtro": "folga_1",
+        "sinais": 408,
+        "confirmados": 99.8
+      },
+      {
+        "media": "todas",
+        "horas_antes": 1,
+        "filtro": "sem_filtro",
+        "sinais": 1189,
+        "confirmados": 90.2
+      },
+      {
+        "media": "todas",
+        "horas_antes": 1,
+        "filtro": "volume",
+        "sinais": 82,
+        "confirmados": 89.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 7,
+        "filtro": "folga_05",
+        "sinais": 34,
+        "confirmados": 79.4
+      },
+      {
+        "media": 9,
+        "horas_antes": 7,
+        "filtro": "folga_05_volume",
+        "sinais": 1,
+        "confirmados": 0.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 7,
+        "filtro": "folga_1",
+        "sinais": 3,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 7,
+        "filtro": "sem_filtro",
+        "sinais": 114,
+        "confirmados": 61.4
+      },
+      {
+        "media": 9,
+        "horas_antes": 7,
+        "filtro": "volume",
+        "sinais": 3,
+        "confirmados": 33.3
+      },
+      {
+        "media": 9,
+        "horas_antes": 6,
+        "filtro": "folga_05",
+        "sinais": 83,
+        "confirmados": 85.5
+      },
+      {
+        "media": 9,
+        "horas_antes": 6,
+        "filtro": "folga_05_volume",
+        "sinais": 10,
+        "confirmados": 90.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 6,
+        "filtro": "folga_1",
+        "sinais": 15,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 6,
+        "filtro": "sem_filtro",
+        "sinais": 290,
+        "confirmados": 64.1
+      },
+      {
+        "media": 9,
+        "horas_antes": 6,
+        "filtro": "volume",
+        "sinais": 26,
+        "confirmados": 69.2
+      },
+      {
+        "media": 9,
+        "horas_antes": 5,
+        "filtro": "folga_05",
+        "sinais": 129,
+        "confirmados": 82.9
+      },
+      {
+        "media": 9,
+        "horas_antes": 5,
+        "filtro": "folga_05_volume",
+        "sinais": 15,
+        "confirmados": 80.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 5,
+        "filtro": "folga_1",
+        "sinais": 32,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 5,
+        "filtro": "sem_filtro",
+        "sinais": 349,
+        "confirmados": 74.8
+      },
+      {
+        "media": 9,
+        "horas_antes": 5,
+        "filtro": "volume",
+        "sinais": 32,
+        "confirmados": 71.9
+      },
+      {
+        "media": 9,
+        "horas_antes": 4,
+        "filtro": "folga_05",
+        "sinais": 177,
+        "confirmados": 93.2
+      },
+      {
+        "media": 9,
+        "horas_antes": 4,
+        "filtro": "folga_05_volume",
+        "sinais": 15,
+        "confirmados": 93.3
+      },
+      {
+        "media": 9,
+        "horas_antes": 4,
+        "filtro": "folga_1",
+        "sinais": 65,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 4,
+        "filtro": "sem_filtro",
+        "sinais": 404,
+        "confirmados": 81.2
+      },
+      {
+        "media": 9,
+        "horas_antes": 4,
+        "filtro": "volume",
+        "sinais": 30,
+        "confirmados": 76.7
+      },
+      {
+        "media": 9,
+        "horas_antes": 3,
+        "filtro": "folga_05",
+        "sinais": 234,
+        "confirmados": 96.6
+      },
+      {
+        "media": 9,
+        "horas_antes": 3,
+        "filtro": "folga_05_volume",
+        "sinais": 20,
+        "confirmados": 95.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 3,
+        "filtro": "folga_1",
+        "sinais": 102,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 3,
+        "filtro": "sem_filtro",
+        "sinais": 449,
+        "confirmados": 86.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 3,
+        "filtro": "volume",
+        "sinais": 36,
+        "confirmados": 77.8
+      },
+      {
+        "media": 9,
+        "horas_antes": 2,
+        "filtro": "folga_05",
+        "sinais": 287,
+        "confirmados": 95.8
+      },
+      {
+        "media": 9,
+        "horas_antes": 2,
+        "filtro": "folga_05_volume",
+        "sinais": 16,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 2,
+        "filtro": "folga_1",
+        "sinais": 145,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 2,
+        "filtro": "sem_filtro",
+        "sinais": 507,
+        "confirmados": 87.6
+      },
+      {
+        "media": 9,
+        "horas_antes": 2,
+        "filtro": "volume",
+        "sinais": 39,
+        "confirmados": 84.6
+      },
+      {
+        "media": 9,
+        "horas_antes": 1,
+        "filtro": "folga_05",
+        "sinais": 329,
+        "confirmados": 98.5
+      },
+      {
+        "media": 9,
+        "horas_antes": 1,
+        "filtro": "folga_05_volume",
+        "sinais": 19,
+        "confirmados": 100.0
+      },
+      {
+        "media": 9,
+        "horas_antes": 1,
+        "filtro": "folga_1",
+        "sinais": 191,
+        "confirmados": 99.5
+      },
+      {
+        "media": 9,
+        "horas_antes": 1,
+        "filtro": "sem_filtro",
+        "sinais": 576,
+        "confirmados": 89.9
+      },
+      {
+        "media": 9,
+        "horas_antes": 1,
+        "filtro": "volume",
+        "sinais": 43,
+        "confirmados": 90.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 7,
+        "filtro": "folga_05",
+        "sinais": 16,
+        "confirmados": 81.2
+      },
+      {
+        "media": 21,
+        "horas_antes": 7,
+        "filtro": "folga_1",
+        "sinais": 2,
+        "confirmados": 50.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 7,
+        "filtro": "sem_filtro",
+        "sinais": 65,
+        "confirmados": 55.4
+      },
+      {
+        "media": 21,
+        "horas_antes": 7,
+        "filtro": "volume",
+        "sinais": 1,
+        "confirmados": 0.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 6,
+        "filtro": "folga_05",
+        "sinais": 60,
+        "confirmados": 75.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 6,
+        "filtro": "folga_05_volume",
+        "sinais": 5,
+        "confirmados": 80.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 6,
+        "filtro": "folga_1",
+        "sinais": 10,
+        "confirmados": 80.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 6,
+        "filtro": "sem_filtro",
+        "sinais": 181,
+        "confirmados": 64.1
+      },
+      {
+        "media": 21,
+        "horas_antes": 6,
+        "filtro": "volume",
+        "sinais": 12,
+        "confirmados": 66.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 5,
+        "filtro": "folga_05",
+        "sinais": 77,
+        "confirmados": 85.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 5,
+        "filtro": "folga_05_volume",
+        "sinais": 5,
+        "confirmados": 80.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 5,
+        "filtro": "folga_1",
+        "sinais": 25,
+        "confirmados": 96.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 5,
+        "filtro": "sem_filtro",
+        "sinais": 202,
+        "confirmados": 72.3
+      },
+      {
+        "media": 21,
+        "horas_antes": 5,
+        "filtro": "volume",
+        "sinais": 13,
+        "confirmados": 69.2
+      },
+      {
+        "media": 21,
+        "horas_antes": 4,
+        "filtro": "folga_05",
+        "sinais": 112,
+        "confirmados": 87.5
+      },
+      {
+        "media": 21,
+        "horas_antes": 4,
+        "filtro": "folga_05_volume",
+        "sinais": 9,
+        "confirmados": 66.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 4,
+        "filtro": "folga_1",
+        "sinais": 35,
+        "confirmados": 97.1
+      },
+      {
+        "media": 21,
+        "horas_antes": 4,
+        "filtro": "sem_filtro",
+        "sinais": 249,
+        "confirmados": 79.5
+      },
+      {
+        "media": 21,
+        "horas_antes": 4,
+        "filtro": "volume",
+        "sinais": 18,
+        "confirmados": 66.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 3,
+        "filtro": "folga_05",
+        "sinais": 148,
+        "confirmados": 95.3
+      },
+      {
+        "media": 21,
+        "horas_antes": 3,
+        "filtro": "folga_05_volume",
+        "sinais": 13,
+        "confirmados": 84.6
+      },
+      {
+        "media": 21,
+        "horas_antes": 3,
+        "filtro": "folga_1",
+        "sinais": 55,
+        "confirmados": 100.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 3,
+        "filtro": "sem_filtro",
+        "sinais": 286,
+        "confirmados": 85.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 3,
+        "filtro": "volume",
+        "sinais": 19,
+        "confirmados": 78.9
+      },
+      {
+        "media": 21,
+        "horas_antes": 2,
+        "filtro": "folga_05",
+        "sinais": 192,
+        "confirmados": 96.9
+      },
+      {
+        "media": 21,
+        "horas_antes": 2,
+        "filtro": "folga_05_volume",
+        "sinais": 14,
+        "confirmados": 85.7
+      },
+      {
+        "media": 21,
+        "horas_antes": 2,
+        "filtro": "folga_1",
+        "sinais": 90,
+        "confirmados": 100.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 2,
+        "filtro": "sem_filtro",
+        "sinais": 315,
+        "confirmados": 87.9
+      },
+      {
+        "media": 21,
+        "horas_antes": 2,
+        "filtro": "volume",
+        "sinais": 22,
+        "confirmados": 77.3
+      },
+      {
+        "media": 21,
+        "horas_antes": 1,
+        "filtro": "folga_05",
+        "sinais": 222,
+        "confirmados": 98.6
+      },
+      {
+        "media": 21,
+        "horas_antes": 1,
+        "filtro": "folga_05_volume",
+        "sinais": 14,
+        "confirmados": 100.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 1,
+        "filtro": "folga_1",
+        "sinais": 123,
+        "confirmados": 100.0
+      },
+      {
+        "media": 21,
+        "horas_antes": 1,
+        "filtro": "sem_filtro",
+        "sinais": 370,
+        "confirmados": 91.4
+      },
+      {
+        "media": 21,
+        "horas_antes": 1,
+        "filtro": "volume",
+        "sinais": 24,
+        "confirmados": 83.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 7,
+        "filtro": "folga_05",
+        "sinais": 10,
+        "confirmados": 70.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 7,
+        "filtro": "folga_05_volume",
+        "sinais": 1,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 7,
+        "filtro": "folga_1",
+        "sinais": 1,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 7,
+        "filtro": "sem_filtro",
+        "sinais": 30,
+        "confirmados": 60.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 7,
+        "filtro": "volume",
+        "sinais": 2,
+        "confirmados": 50.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 6,
+        "filtro": "folga_05",
+        "sinais": 31,
+        "confirmados": 71.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 6,
+        "filtro": "folga_05_volume",
+        "sinais": 1,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 6,
+        "filtro": "folga_1",
+        "sinais": 8,
+        "confirmados": 75.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 6,
+        "filtro": "sem_filtro",
+        "sinais": 110,
+        "confirmados": 69.1
+      },
+      {
+        "media": 50,
+        "horas_antes": 6,
+        "filtro": "volume",
+        "sinais": 6,
+        "confirmados": 83.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 5,
+        "filtro": "folga_05",
+        "sinais": 45,
+        "confirmados": 91.1
+      },
+      {
+        "media": 50,
+        "horas_antes": 5,
+        "filtro": "folga_05_volume",
+        "sinais": 1,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 5,
+        "filtro": "folga_1",
+        "sinais": 14,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 5,
+        "filtro": "sem_filtro",
+        "sinais": 130,
+        "confirmados": 77.7
+      },
+      {
+        "media": 50,
+        "horas_antes": 5,
+        "filtro": "volume",
+        "sinais": 6,
+        "confirmados": 83.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 4,
+        "filtro": "folga_05",
+        "sinais": 73,
+        "confirmados": 91.8
+      },
+      {
+        "media": 50,
+        "horas_antes": 4,
+        "filtro": "folga_05_volume",
+        "sinais": 3,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 4,
+        "filtro": "folga_1",
+        "sinais": 23,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 4,
+        "filtro": "sem_filtro",
+        "sinais": 156,
+        "confirmados": 83.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 4,
+        "filtro": "volume",
+        "sinais": 6,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 3,
+        "filtro": "folga_05",
+        "sinais": 102,
+        "confirmados": 94.1
+      },
+      {
+        "media": 50,
+        "horas_antes": 3,
+        "filtro": "folga_05_volume",
+        "sinais": 5,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 3,
+        "filtro": "folga_1",
+        "sinais": 43,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 3,
+        "filtro": "sem_filtro",
+        "sinais": 182,
+        "confirmados": 86.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 3,
+        "filtro": "volume",
+        "sinais": 10,
+        "confirmados": 90.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 2,
+        "filtro": "folga_05",
+        "sinais": 125,
+        "confirmados": 96.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 2,
+        "filtro": "folga_05_volume",
+        "sinais": 8,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 2,
+        "filtro": "folga_1",
+        "sinais": 72,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 2,
+        "filtro": "sem_filtro",
+        "sinais": 212,
+        "confirmados": 86.8
+      },
+      {
+        "media": 50,
+        "horas_antes": 2,
+        "filtro": "volume",
+        "sinais": 13,
+        "confirmados": 92.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 1,
+        "filtro": "folga_05",
+        "sinais": 145,
+        "confirmados": 97.9
+      },
+      {
+        "media": 50,
+        "horas_antes": 1,
+        "filtro": "folga_05_volume",
+        "sinais": 6,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 1,
+        "filtro": "folga_1",
+        "sinais": 94,
+        "confirmados": 100.0
+      },
+      {
+        "media": 50,
+        "horas_antes": 1,
+        "filtro": "sem_filtro",
+        "sinais": 243,
+        "confirmados": 89.3
+      },
+      {
+        "media": 50,
+        "horas_antes": 1,
+        "filtro": "volume",
+        "sinais": 15,
+        "confirmados": 93.3
+      }
+    ]
+  }
 }

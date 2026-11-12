@@ -444,6 +444,66 @@
   const dataBR = (iso) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : "");
   const cor = (v) => (v >= 0 ? "sobe" : "cai");
   let varianteBT = LS.get("bt-variante") || "volume";
+  let mediaConf = LS.get("conf-media") || "todas";
+
+  // horário de fechamento da B3 hoje: 17h55 com os EUA no horário padrão, 16h55 no de verão
+  function horaFechamentoB3(d = new Date()) {
+    const ano = d.getFullYear();
+    const domingo = (mes, n) => { const x = new Date(ano, mes, 1); x.setDate(1 + ((7 - x.getDay()) % 7) + 7 * (n - 1)); return x; };
+    return d >= domingo(2, 2) && d < domingo(10, 1) ? 17 : 18;   // hora "cheia" seguinte ao fechamento (x:55)
+  }
+
+  function htmlConfirmacao(conf) {
+    if (!conf?.linhas?.length) return "";
+    const filtros = ["sem_filtro", "folga_05", "volume", "folga_05_volume"].filter((f) => conf.filtros[f]);
+    const linhas = conf.linhas.filter((r) => String(r.media) === mediaConf);
+    const horas = [...new Set(linhas.map((r) => r.horas_antes))].sort((a, b) => b - a);
+    const cel = (hAntes, f) => linhas.find((r) => r.horas_antes === hAntes && r.filtro === f);
+    const fecha = horaFechamentoB3();
+    const MINIMO = 30;   // poucos sinais não dão uma taxa confiável
+
+    let melhor = null;
+    for (const hAntes of horas) {   // do mais cedo para o mais tarde: o primeiro com 80%+
+      for (const f of filtros) {
+        const c = cel(hAntes, f);
+        if (c && c.sinais >= MINIMO && c.confirmados >= 80 && (!melhor || (melhor.horas_antes === hAntes && c.sinais > melhor.sinais))) {
+          melhor = { ...c, horas_antes: hAntes };
+        }
+      }
+      if (melhor) break;
+    }
+
+    let h = `<h2>Quando o rompimento se confirma?</h2>
+      <p class="ajuda">Se num certo horário o preço estava acima da média (e ontem fechou abaixo), em quantos % dos casos o dia fechou acima, confirmando a compra. ${conf.total_sinais.toLocaleString("pt-BR")} casos em ${conf.acoes_analisadas} ações.</p>`;
+    h += `<div class="segmentos" role="group" aria-label="Média do estudo">` +
+      ["todas", "9", "21", "50"].map((m) => `<button type="button" data-conf-media="${m}" aria-pressed="${m === mediaConf}">${m === "todas" ? "Todas" : "MM" + m}</button>`).join("") + `</div>`;
+    if (melhor) {
+      h += `<p class="destaque">Primeiro horário com 80% ou mais: <strong>~${melhor.horas_antes}h antes do fechamento (${fecha - melhor.horas_antes}h hoje)</strong>,
+        ${esc(conf.filtros[melhor.filtro].toLowerCase())}: ${num1(melhor.confirmados)}% se confirmaram em ${melhor.sinais} casos.</p>`;
+    } else {
+      h += `<p class="destaque">Nenhum horário chegou a 80% com pelo menos ${MINIMO} casos nesta média.</p>`;
+    }
+    h += `<div class="rolagem"><table class="tabela conf"><thead><tr><th scope="col">Horário</th>` +
+      filtros.map((f) => `<th scope="col">${esc(conf.filtros[f])}</th>`).join("") + `</tr></thead><tbody>` +
+      horas.map((hAntes) => `<tr><th scope="row">${fecha - hAntes}h<br><small>~${hAntes}h antes</small></th>` +
+        filtros.map((f) => {
+          const c = cel(hAntes, f);
+          if (!c) return `<td>—</td>`;
+          const bom = c.confirmados >= 80 && c.sinais >= MINIMO;
+          return `<td class="${bom ? "bom" : ""}">${num1(c.confirmados)}%<br><small>${c.sinais} casos</small></td>`;
+        }).join("") + `</tr>`).join("") +
+      `</tbody></table></div>`;
+    h += `<p class="compra-info">Horários de hoje (a B3 fecha às ${fecha - 1}h55). Folga = preço pelo menos X% acima da média. Volume = volume do dia projetado em 1,2× a média.</p>`;
+    return h;
+  }
+
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-conf-media]");
+    if (!b) return;
+    mediaConf = b.dataset.confMedia;
+    LS.set("conf-media", mediaConf);
+    renderResultados();
+  });
 
   function statsOps(ops) {
     const r = ops.map((o) => Number(o.resultado)).filter((x) => !Number.isNaN(x));
@@ -519,6 +579,7 @@
       if (bt.comprar_e_segurar_medio != null) {
         h += `<p class="compra-info">Referência: no mesmo período, quem comprou e segurou as ações teve ${pct(bt.comprar_e_segurar_medio)} em média.</p>`;
       }
+      h += htmlConfirmacao(bt.confirmacao);
       h += `<p class="rodape">${esc(bt.aviso || "")} Atualizado em ${dataBR((bt.gerado_em || "").slice(0, 10))}.</p>`;
     }
     box.innerHTML = h;

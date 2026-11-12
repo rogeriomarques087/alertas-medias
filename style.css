@@ -244,3 +244,9 @@ code { font-size: .875em; background: var(--superficie); border: 1px solid var(-
 .ops h3 { font-size: 1.0625rem; }
 .itens small { color: var(--tinta-suave); font-size: .8125rem; }
 dialog .ajuda { margin: 4px 0 0; font-size: .8125rem; }
+.rolagem { overflow-x: auto; margin: 0 -16px; padding: 0 16px; }
+.tabela.conf { font-size: .875rem; min-width: 22rem; }
+.tabela.conf th, .tabela.conf td { text-align: center; vertical-align: top; padding: 8px 3px; }
+.tabela.conf th:first-child { text-align: left; }
+.tabela.conf small { color: var(--tinta-suave); font-size: .75rem; font-weight: 400; }
+.tabela.conf td.bom { color: var(--compra); font-weight: 700; background: var(--superficie); }
